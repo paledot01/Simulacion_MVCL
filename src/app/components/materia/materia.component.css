@@ -1,0 +1,16 @@
+.circulo{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #FF0000;
+    animation: caida 2s linear infinite;
+}
+
+/* @keyframes caida {
+    0%{
+        transform: translateY(0px);
+    }
+    100%{
+        transform: translateY(500px);
+    }
+} */
