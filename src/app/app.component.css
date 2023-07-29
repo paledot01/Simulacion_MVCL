@@ -1,0 +1,21 @@
+.sub-main{
+    width: 600px;
+}
+
+.lienso{
+    position: relative;
+    width: 600px;
+    height: 750px;
+}
+.linea-guia{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 600px;
+    height: 600px;
+    border: 1px solid rebeccapurple;
+}
+input{
+    color: aqua;
+    background-color: black;
+}

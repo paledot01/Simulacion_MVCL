@@ -1,0 +1,12 @@
+.contenedor{
+    position: relative;
+}
+.borde-kevin{
+    border: 1px solid rgb(80, 80, 80);
+}
+.canvas2{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border: 1px solid rebeccapurple;
+}
