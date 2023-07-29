@@ -9,6 +9,7 @@ export class LiensoComponent implements OnInit, AfterContentInit{
   
   @Input() activarAnimacion: boolean = false;
   @Input() restaurarAnimacion: boolean = false;
+
   
   @ViewChild('canvas', {static: true}) myCanvas!: ElementRef;
   @ViewChild('canvas2', {static: true}) myCanvas2!: ElementRef;
@@ -23,7 +24,8 @@ export class LiensoComponent implements OnInit, AfterContentInit{
 
   gravedad: number = 10; // 9.81 m/s^2
   diferencial_tiempo: number = 0.02; // 20 ms
-  @Input() altura: number = 5; // altura en metros
+  //@Input() altura: number = 5; // altura en metros
+  altura: number = 5; // altura en metros
   proporcion: number = 0.5; // 580 px = 15 m -> 600 menos el grosor del cuerpo
   recorrido_inicial: number = (this.gravedad/2) * this.diferencial_tiempo * this.diferencial_tiempo * (580 / this.altura);// de metros a pixeles (20m -> 600px) en el 1er invervalo de tiempo
   contador_repeticion: number = 0;

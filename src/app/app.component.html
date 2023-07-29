@@ -6,7 +6,7 @@
       <div class="d-flex">
         <div class="me-4">
           <label for="alturaInput" class="me-2">Altura:</label>
-          <input type="number" [(ngModel)] = "input_altura" id="alturaInput" name="alturaInput" min="2" max="180">
+          <input type="number" id="alturaInput" name="alturaInput" min="2" max="180" value="5"><!-- [(ngModel)] = "input_altura" -->
         </div><!--
         <div class="me-4">
           <label for="alturaInput" class="me-2">Gravedad:</label>
@@ -22,7 +22,10 @@
     
     <div class="lienso border mx-auto d-flex justify-content-center align-items-center"><!-- align-items-center -->
       <!--<div class = "linea-guia"></div>-->
-      <app-lienso [activarAnimacion] = "activarMetodoAnimacion" [restaurarAnimacion] = "activarMetodoReinicio" [altura] = "5"></app-lienso>
+      <app-lienso
+                  [activarAnimacion] = "activarMetodoAnimacion" 
+                  [restaurarAnimacion] = "activarMetodoReinicio">
+      </app-lienso>
     </div>
 
   </div>
