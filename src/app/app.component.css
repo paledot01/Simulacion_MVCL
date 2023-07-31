@@ -1,13 +1,15 @@
+.main{
+    border: 1px solid rgb(40, 40, 40);
+}
 .sub-main{
     width: 600px;
 }
-
 .lienso{
     position: relative;
     width: 600px;
     height: 750px;
     border: 1px solid rgb(80, 80, 80);
-}
+}/*
 .linea-guia{
     position: absolute;
     top: 0px;
@@ -15,9 +17,9 @@
     width: 600px;
     height: 600px;
     border: 1px solid rebeccapurple;
-}
-#alturaInput{
-    width: 50px;
+}*/
+#alturaInput, #gravedadInput{
+    width: 55px;
 }
 input{
     color: aqua;
@@ -26,4 +28,47 @@ input{
 }
 .notas{
     font-size: 14px;
+}
+
+
+/* -- FOOTER -- */
+.pie{
+    margin-top: 150px;
+    margin-bottom: 30px;
+}
+.git{
+    width: 35px;
+    fill: rgb(200, 200, 200);
+    animation: meneo 1s 0.5s linear infinite;
+    transition: 0.5s;
+}
+.git:hover{
+    fill: aqua;
+}
+.git_mensaje{
+    font-size: 11px;
+}
+
+@keyframes meneo {
+    0%, 7% {
+      transform: rotateZ(0);
+    }
+    15% {
+      transform: rotateZ(-15deg);
+    }
+    20% {
+      transform: rotateZ(10deg);
+    }
+    25% {
+      transform: rotateZ(-10deg);
+    }
+    30% {
+      transform: rotateZ(6deg);
+    }
+    35% {
+      transform: rotateZ(-4deg);
+    }
+    40%, 100% {
+      transform: rotateZ(0);
+    }
 }
