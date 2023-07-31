@@ -1,32 +1,46 @@
 <div class="main m-5 p-5 d-flex justify-content-center border border-warning">
-  <div class="sub-main d-flex flex-column">
+  <div class="sub-main">
+    <div class="sub-main d-flex flex-column">
 
-    <div class="d-flex mb-3 justify-content-between">
+      <div class="d-flex mb-3 justify-content-between">
+        
+        <div class="d-flex">
+          <div class="me-4">
+            <label for="alturaInput" class="me-2">Altura:</label>
+            <input #input_altura (focus)="activarBotones()"  type="number" id="alturaInput" name="alturaInput" min="2" max="180" value="5"><!-- [(ngModel)] = "input_altura" -->
+            <label for="alturaInput" class="ms-2">(metros)</label>
+          </div><!--
+          <div class="me-4">
+            <label for="alturaInput" class="me-2">Gravedad:</label>
+            <input type="number" id="alturaInput" name="alturaInput" min="5" max="500" value="5">
+          </div>-->
+        </div>
+        <div>
+          <input #restart type="button" class="btn btn-dark me-2" value="Repaint"  (click)="activarMetodoReinicioComponenteLienso()" disabled>
+          <input #start type="button" class="btn btn-dark" value="Start" (click)="activarMetodoAnimacionComponenteLienso()">
+        </div>
+  
+      </div>
       
-      <div class="d-flex">
-        <div class="me-4">
-          <label for="alturaInput" class="me-2">Altura:</label>
-          <input type="number" id="alturaInput" name="alturaInput" min="2" max="180" value="5"><!-- [(ngModel)] = "input_altura" -->
-        </div><!--
-        <div class="me-4">
-          <label for="alturaInput" class="me-2">Gravedad:</label>
-          <input type="number" id="alturaInput" name="alturaInput" min="5" max="500" value="5">
-        </div>-->
+      <div class="lienso mx-auto d-flex justify-content-center align-items-center"><!-- align-items-center -->
+        <!--<div class = "linea-guia"></div>-->
+        <app-lienso
+                    [altura] = "v_altura"
+                    [activarAnimacion] = "activarMetodoAnimacion" 
+                    [restaurarAnimacion] = "activarMetodoReinicio">
+        </app-lienso>
       </div>
-      <div>
-        <input #restart type="button" class="btn btn-dark me-2" value="restart"  (click)="activarMetodoReinicioComponenteLienso()" disabled>
-        <input #start type="button" class="btn btn-dark" value="start" (click)="activarMetodoAnimacionComponenteLienso()">
-      </div>
-
+  
     </div>
-    
-    <div class="lienso border mx-auto d-flex justify-content-center align-items-center"><!-- align-items-center -->
-      <!--<div class = "linea-guia"></div>-->
-      <app-lienso
-                  [activarAnimacion] = "activarMetodoAnimacion" 
-                  [restaurarAnimacion] = "activarMetodoReinicio">
-      </app-lienso>
+  
+    <div class="mt-3 notas">
+      Nota:
+      <ul>
+        <li>El movimiento del cuerpo en esta simulación esta basado en la formula Física de los cuerpos en caida libre.</li>
+        <li>Dependiendo de la altura los cuerpos estas se rescalan con medidas reales: pelota(20cm de diametro), persona(1.75m) y estatua de la libertad(93m).</li>
+      </ul>
     </div>
-
   </div>
+
+  
 </div>

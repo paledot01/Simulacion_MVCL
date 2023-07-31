@@ -10,10 +10,13 @@ export class AppComponent {
 
   @ViewChild('start') start!: ElementRef;
   @ViewChild('restart') restart!: ElementRef;
+  @ViewChild('input_altura') input_altura!: ElementRef; // --> para obtener el valor del input
 
   activarMetodoAnimacion: boolean = false;
   activarMetodoReinicio: boolean = false;
 
+  v_altura: number = 5;
+  new_altura: number = 5;
   //input_altura: number = 5; // altura en metros
   //send_altura: number = 5; // altura en metros
 
@@ -27,9 +30,14 @@ export class AppComponent {
     this.restart.nativeElement.disabled = false;
   }
 
+  activarBotones(){
+    this.start.nativeElement.disabled = true;
+    this.restart.nativeElement.disabled = false;
+  }
+
   /* al reiniciar se restablece los valores por defecto, por eso debemos 1er desactivar la animacion  */
   activarMetodoReinicioComponenteLienso(){
-    //this.send_altura = this.input_altura;
+    this.v_altura = this.input_altura.nativeElement.value;
     //console.log('send_altura: ', this.send_altura, ' input_altura: ', this.input_altura);
     this.activarMetodoAnimacion = false;
     

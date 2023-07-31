@@ -1,11 +1,12 @@
-import { Component, ViewChild, ElementRef, AfterContentInit, OnInit, Input } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterContentInit, OnInit, Input, ChangeDetectionStrategy, SimpleChanges, OnChanges } from '@angular/core';
 
 @Component({
   selector: 'app-lienso',
   templateUrl: './lienso.component.html',
-  styleUrls: ['./lienso.component.css']
+  styleUrls: ['./lienso.component.css'],
+  changeDetection: ChangeDetectionStrategy.Default
 })
-export class LiensoComponent implements OnInit, AfterContentInit{
+export class LiensoComponent implements OnInit, AfterContentInit, OnChanges{
   
   @Input() activarAnimacion: boolean = false;
   @Input() restaurarAnimacion: boolean = false;
@@ -22,10 +23,11 @@ export class LiensoComponent implements OnInit, AfterContentInit{
   private image_men!: HTMLImageElement | null;
   private image_torre!: HTMLImageElement | null;
 
+  @Input() altura: number = 5; // altura en metros
+  men_altura: number = 1.75*(580/this.altura); // altura del hombre en pixeles
+  torre_altura: number = 93*(580/this.altura); // altura de la torre en pixeles
   gravedad: number = 10; // 9.81 m/s^2
   diferencial_tiempo: number = 0.02; // 20 ms
-  //@Input() altura: number = 5; // altura en metros
-  altura: number = 5; // altura en metros
   proporcion: number = 0.5; // 580 px = 15 m -> 600 menos el grosor del cuerpo
   recorrido_inicial: number = (this.gravedad/2) * this.diferencial_tiempo * this.diferencial_tiempo * (580 / this.altura);// de metros a pixeles (20m -> 600px) en el 1er invervalo de tiempo
   contador_repeticion: number = 0;
@@ -60,7 +62,14 @@ export class LiensoComponent implements OnInit, AfterContentInit{
     }
   }
   
-  ngOnChanges(): void { // --> activa la animacion
+  ngOnChanges(changes: SimpleChanges): void { // --> detecta los cambios de los inputs. Se ejecuta antes de ngOnInit()
+    if(this.altura){
+      this.recorrido_inicial = (this.gravedad/2) * this.diferencial_tiempo * this.diferencial_tiempo * (580 / this.altura);// de metros a pixeles (20m -> 600px) en el 1er invervalo de tiempo
+      this.radius = 58/this.altura;
+      this.men_altura = 1.75*(580/this.altura);
+      this.torre_altura = 93*(580/this.altura);
+      console.log('alturaa: ', changes); // --> muestra los cambios
+    }
     if (this.activarAnimacion) {
       console.log('start------');
       this.start();
@@ -94,20 +103,23 @@ export class LiensoComponent implements OnInit, AfterContentInit{
   drawTexto(){
     this.contexto2!.font = '14px Courier New';
     this.contexto2!.fillStyle = 'rgb(200,200,200)';
-    this.contexto2!.fillText('Altura: ' + 20, 20, 54);
+    this.contexto2!.fillText('Altura: ' + this.altura + ' m', 20, 54);
     this.contexto2!.fillText('S.R.', 20, 634);
   }
   
   drawReferencias(){ // --> dibujamos al hombre y la torre
+    //this.men_altura = 1.75*(580/this.altura);
     this.image_men = new Image();
     this.image_men.src = 'assets/men.png';
     this.image_men.onload = () => {
-      this.contexto2!.drawImage(this.image_men!, 0, 0, 28.5, 100); // 171x600 -> w = h*171/600
+      this.contexto2!.drawImage(this.image_men!, 65, 635-this.men_altura, (this.men_altura*171)/600, this.men_altura); // 171x600 -> w = h*171/600 -> 600 es la altura de la imagen png
     }
-    this.image_torre = new Image();
-    this.image_torre.src = 'assets/torre.png';
-    this.image_torre.onload = () => {
-      this.contexto2!.drawImage(this.image_torre!, 250, 0, 44.1, 100); // 265x600 -> w = h*265/600
+    if(this.altura > 70){
+      this.image_torre = new Image();
+      this.image_torre.src = 'assets/torre.png';
+      this.image_torre.onload = () => {
+        this.contexto2!.drawImage(this.image_torre!, 270, 635-this.torre_altura, (this.torre_altura*265)/600, this.torre_altura); // 265x600 -> w = h*265/600
+      }
     }
   }
 
@@ -121,7 +133,8 @@ export class LiensoComponent implements OnInit, AfterContentInit{
 
   start(){
     this.tiempo = new Date().getTime();
-    this.id = setInterval(() => {this.update();},20);// comienza(desde la 1er) despues de 20 ms
+    console.log("Altura: ", this.altura, " Radio: ", this.radius);
+    this.id = setInterval(() => {this.update();}, 20);// comienza(desde la 1er) despues de 20 ms
   }
 
   update(): void {
@@ -135,11 +148,17 @@ export class LiensoComponent implements OnInit, AfterContentInit{
 
   restart(){
     clearInterval(this.id); // detenemos el intervalo
+    // CANVAS 1
     this.contexto!.clearRect(0, 0, this.canvas!.width, this.canvas!.height);
     this.tiempo = 0;
     this.y = 0;
     this.contador_repeticion = 0;
     this.drawCirculo();
+    // CANVAS 2
+    this.contexto2!.clearRect(0, 0, this.canvas2!.width, this.canvas2!.height);
+    this.drawLinea();
+    this.drawTexto();
+    this.drawReferencias();
     //this.restaurarAnimacion = false; // --> desactiva la animacion que fue activada desde el componente padre
   }
 
